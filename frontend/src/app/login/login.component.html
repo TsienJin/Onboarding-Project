@@ -1,0 +1,21 @@
+<main class="flex w-full h-[100dvh] justify-center items-center bg-gray-200">
+  <div class="flex flex-col justify-start items-start shadow-lg">
+    <nz-card>
+      <h2 nz-typography>Login</h2>
+      <nz-divider></nz-divider>
+      <form nz-form (ngSubmit)="submitForm($event)" class="flex flex-col justify-start items-stretch w-[40ch]">
+        <nz-form-item>
+          <nz-input-group nzPrefixIcon="search" nzSize="large">
+            <input nz-input type="text" (keyup)="onUsernameChange($event)"  placeholder="Username" />
+          </nz-input-group>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-input-group nzPrefixIcon="search" nzSize="large">
+            <input type="password" nz-input (keyup)="onPasswordChange($event)" placeholder="Password" />
+          </nz-input-group>
+        </nz-form-item>
+        <button nz-button nzBlock type="button" nzSize="large" (click)="submitForm($event)" [nzType]="'primary'" [nzLoading]="loading">Log in</button>
+      </form>
+    </nz-card>
+  </div>
+</main>
