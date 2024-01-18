@@ -1,0 +1,16 @@
+
+
+### Proj files
+**/*.idea
+/.idea/
+**/*.vscode
+**/*.iml
+
+
+### Env Variables
+**/environment.*
+
+
+### Java device files
+**/*.gradle/
+/backend/build
