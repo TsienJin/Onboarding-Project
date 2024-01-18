@@ -1,0 +1,8 @@
+server:
+  port: 8080
+
+api:
+  config:
+    cors:
+      allow:
+        - "http://localhost:4200"
