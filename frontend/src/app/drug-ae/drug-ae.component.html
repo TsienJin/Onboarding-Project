@@ -1,0 +1,31 @@
+<main class="w-full min-h-[100dvh] flex flex-col justify-start items-stretch pb-12">
+  <nz-page-header>
+    <nz-page-header-title>Drug Adverse Events</nz-page-header-title>
+    <nz-page-header-content class="max-w-prose">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+    </nz-page-header-content>
+    <nz-page-header-extra>
+      <nz-space>
+        <button nz-button type="button" (click)="reset()" *nzSpaceItem>Reset</button>
+        <button nz-button type="button" (click)="load()" *nzSpaceItem>Load</button>
+        <button nz-button type="button" (click)="submit()" *nzSpaceItem nzType="primary">Submit</button>
+      </nz-space>
+    </nz-page-header-extra>
+  </nz-page-header>
+  <nz-divider></nz-divider>
+  <div id="div-to-contain-array-of-cards" class="
+  flex flex-col justify-start items-center
+  w-full
+  ">
+    <div class="flex flex-col justify-start items-start gap-y-4">
+      <ng-container *ngFor="let cardId of cardIdArray; let i = index">
+        <drug-ae-card (DeleteCard)="deleteCard(cardId)" [cardId]="i"></drug-ae-card>
+      </ng-container>
+      <div class="flex flex-col justify-center items-center w-full">
+        <button (click)="addCard()" nz-button nzType="primary" nzSize="large">
+          Add Drug-AE Pair
+        </button>
+      </div>
+    </div>
+  </div>
+</main>
