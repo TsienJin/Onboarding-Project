@@ -1,0 +1,7 @@
+<nz-form-item class="flex flex-row justify-start items-center" [formGroup]="fg">
+  <nz-form-label nzSpan="6" nzRequired nzFor="context">Context {{ index+1 }}</nz-form-label>
+  <nz-form-control nzSpan="14" >
+    <textarea [formControlName]="name" id="Context" nz-input nzAutosize="true"></textarea>
+  </nz-form-control>
+  <button class="ml-2" type="button" nz-button nzDanger (click)="onDeleteClick()">Delete</button>
+</nz-form-item>
