@@ -43,14 +43,25 @@ export class LoginComponent{
   constructor(
   ) {}
 
+  /**
+   * Callback method on username change
+   * @param event {KeyboardEvent}
+   */
   onUsernameChange(event: KeyboardEvent) {
     this.username = (event.target as HTMLInputElement).value
   }
 
+  /**
+   * Callback method on password change
+   * @param event {KeyboardEvent}
+   */
   onPasswordChange(event: KeyboardEvent){
     this.password = (event.target as HTMLInputElement).value
   }
 
+  /**
+   * Method to send form to backend
+   */
   async sendForm():Promise<void>{
     const res = await axios.post(
       `${environment.BACKEND_URL}/user/login`,
@@ -61,6 +72,10 @@ export class LoginComponent{
     )
   }
 
+  /**
+   * Method to submit form
+   * @param event {any}
+   */
   submitForm(event:any){
     event.preventDefault()
     console.log(this.username, this.password)

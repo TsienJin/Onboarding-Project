@@ -48,21 +48,34 @@ export class CardComponent implements OnInit{
   ) {}
 
 
-
+  /**
+   * Lifecycle hook to initialise the card
+   */
   ngOnInit() {
+    // Create the initial empty context field
     this.addContext()
+
+    // Add form controls for required fields
     this.fixedInputNamesRequired.forEach(name => this.contextForm.addControl(name, this.fb.control('', Validators.required)))
+
+    // Add form controls for optional fields
     this.fixedInputNamesOptional.forEach(name => this.contextForm.addControl(name, this.fb.control('')))
   }
 
+  /**
+   * Method to add one more context field
+   */
   addContext(){
 
     const nextIndex:number = this.latestContextId++
+
+    // Add context type to arr
     this.contextArray.push({
       id: nextIndex,
       name: `context-${nextIndex}`
     })
 
+    // Add control for rendered field
     this.contextForm.addControl(
       `context-${nextIndex}`,
       this.fb.control('')
@@ -70,30 +83,46 @@ export class CardComponent implements OnInit{
   }
 
 
+  /**
+   * Method to delete context field with given NAME
+   * @param name {DrugAeContextTypes.name}
+   */
   deleteIndexAt(name:string) {
     const indexToRemove = this.contextArray.map(c=>c.name).indexOf(name)
     this.contextArray.splice(indexToRemove, 1)
     this.contextForm.removeControl(name)
   }
 
+  /**
+   * Method that is called to signal to parent component to remove this card from the arr
+   */
   deleteThisCard(){
     this.deleteCardEmitter.emit(this.cardId)
   }
 
 
+  /**
+   * Method to return form validity
+   */
   validate():boolean {
     return this.contextForm.status === "VALID"
   }
 
+  /**
+   * Method called from parent component to retrieve formatted card information
+   */
   fetchContents():DrugAeCardFormTypes {
 
+    // Get contexts from card since contexts are dynamic
     const contexts = Object.keys(this.contextForm.controls)
       .filter(key=>key.includes("context-"))
       .map(key=>this.contextForm.controls[key].value)
       .filter(val=>val!=='')
 
+    // Get formControlName from all static fields
     const labeledFields = [...this.fixedInputNamesOptional, ...this.fixedInputNamesRequired]
 
+    // Iterate over fixed fields to fetch values
     let labeledFieldsKv: {[key:string]:string} = {}
     labeledFields.map(key => {
       labeledFieldsKv[key] = this.contextForm.controls[key].value
@@ -108,9 +137,14 @@ export class CardComponent implements OnInit{
     } as DrugAeCardFormTypes
   }
 
-  // RESET must be called from parent before calling this method! This is to avoid
+
+  /**
+   * Method to set the contents of this card
+   * @param contents {DrugAeCardFormTypes}
+   */
   set(contents:DrugAeCardFormTypes){
 
+    // Set fixed values
     this.contextForm.controls['drugInAdr'].setValue(contents.drugInAdr)
     this.contextForm.controls['aeInAdr'].setValue(contents.aeInAdr)
     this.contextForm.controls['adrPossibility'].setValue(contents.adrPossibility || "")
@@ -122,9 +156,9 @@ export class CardComponent implements OnInit{
       .map(key=>{
         this.deleteIndexAt(key)
       })
-
     this.contextArray = []
 
+    // Set contexts dynamically
     contents.context.map((ctx, index)=>{
       this.addContext()
       this.contextForm.controls[`context-${this.latestContextId-1}`].setValue(ctx||"")
