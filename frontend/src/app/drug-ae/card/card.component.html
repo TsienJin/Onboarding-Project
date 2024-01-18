@@ -1,0 +1,62 @@
+
+
+<nz-card nzTitle="Drug-AE Pair {{cardId+1}}" class="min-w-[75ch]" [nzExtra]="deleteButton"  [formGroup]="contextForm">
+  <form nz-form>
+    <nz-form-item nz-flex>
+      <nz-form-label nzSpan="6" nzRequired nzFor="drugInAdr">Drug in ADR</nz-form-label>
+      <nz-form-control nzSpan="14"
+      [nzValidateStatus]="(contextForm.controls['drugInAdr'].valid && contextForm.controls['drugInAdr'].touched) || !contextForm.controls['drugInAdr'].touched ?'success':'error'">
+        <input type="text" id="drugInAdr" nz-input formControlName="drugInAdr" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nz-flex>
+      <nz-form-label nzSpan="6" nzRequired nzFor="aeInAdr">AE in ADR</nz-form-label>
+      <nz-form-control nzSpan="14"
+      [nzValidateStatus]="(contextForm.controls['aeInAdr'].valid && contextForm.controls['aeInAdr'].touched) || !contextForm.controls['aeInAdr'].touched ?'success':'error'">
+        <input type="text" id="aeInAdr" nz-input formControlName="aeInAdr"/>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-divider></nz-divider>
+
+    <ng-container *ngFor="let ctx of contextArray; let i = index">
+      <nz-form-item class="flex flex-row justify-start items-center">
+        <nz-form-label nzSpan="6" nzFor="context">Context {{ i+1 }}</nz-form-label>
+        <nz-form-control nzSpan="14" >
+          <textarea [formControlName]="ctx.name" id="Context" nz-input nzAutosize="true"></textarea>
+        </nz-form-control>
+        <button class="ml-2" type="button" nz-button nzDanger (click)="deleteIndexAt(ctx.name)">Delete</button>
+      </nz-form-item>
+
+    </ng-container>
+    <nz-form-item nz-flex>
+      <nz-form-label nzSpan="6" nzFor="" class="opacity-0">Button spacer</nz-form-label>
+      <button nz-button type="button" (click)="addContext()" nzType="dashed">Add context</button>
+    </nz-form-item>
+
+    <nz-divider></nz-divider>
+
+    <nz-form-item nz-flex>
+      <nz-form-label nzSpan="6" nzFor="adrPossibility">Drug ADR Possibility</nz-form-label>
+      <nz-radio-group id="adrPossibility" nzButtonStyle="solid" formControlName="adrPossibility">
+        <label nz-radio-button nzValue="true">True</label>
+        <label nz-radio-button nzValue="false">False</label>
+        <label nz-radio-button nzValue="uncertain">Uncertain</label>
+      </nz-radio-group>
+    </nz-form-item>
+    <nz-form-item class="flex flex-row justify-start items-center">
+      <nz-form-label nzSpan="6" nzFor="remarks">Remarks</nz-form-label>
+      <nz-form-control nzSpan="14">
+        <textarea id="remarks" nz-input [nzAutosize]="{maxRows:10}" formControlName="remarks"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+
+  </form>
+</nz-card>
+
+
+<ng-template #deleteButton>
+  <button (click)="deleteThisCard()" type="button" nz-button nzType="link" nzSize="small" nzDanger>
+    Delete
+  </button>
+</ng-template>
